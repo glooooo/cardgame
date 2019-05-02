@@ -1,8 +1,9 @@
+import java.util.Stack;
 public class Deck{
-  private Card deck[];
+  private Stack<Card> deck;
   public Deck(){ //I don't think that a redraw limit is neccesary in almost all card games, and that should be part of the program using this class
-    deck = new Card[52];
-    int cardNo = 0;
+    deck = new Stack<Card>();
+    //int cardNo = 0;
     char suit;
     for (int i = 0; i < 4; i++){ //suit
       for (int j = 1; j <= 13; j++){ //value
@@ -24,8 +25,8 @@ public class Deck{
             suit = 'E';
         }
 
-        deck[cardNo] = new Card(j, suit); //add card to deck
-        cardNo ++;
+        deck.push(new Card(j, suit)); //add card to deck
+        //cardNo ++;
       }
     }
   }
