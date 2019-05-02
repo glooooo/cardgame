@@ -29,4 +29,11 @@ public class Deck{
       }
     }
   }
+  public String toString(){
+    String output = "";
+    for(Card card : deck){
+      output += (card + "\n");
+    }
+    return output;
+  }
 }
