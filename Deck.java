@@ -30,6 +30,12 @@ public class Deck{
       }
     }
   }
+  public void shuffle(){
+    Collections.shuffle(deck);
+  }
+  public Card draw(){
+    return deck.pop();
+  }
   public String toString(){
     String output = "";
     for(Card card : deck){
