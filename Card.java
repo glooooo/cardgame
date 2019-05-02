@@ -59,4 +59,8 @@ public class Card{ //this class represents a playing card
 				return "Something";
 		}
 	}
+
+	public String toString(){
+		return getName() + suit;
+	}
 }
