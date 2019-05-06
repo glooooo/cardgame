@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.Collections;
 public class Deck{
   private Stack<Card> deck;
   public Deck(){ //I don't think that a redraw limit is neccesary in almost all card games, and that should be part of the program using this class
