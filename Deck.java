@@ -30,6 +30,9 @@ public class Deck{
       }
     }
   }
+  public int getRemaining(){
+    return deck.size();
+  }
   public void shuffle(){
     Collections.shuffle(deck);
   }
