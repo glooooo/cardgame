@@ -14,12 +14,13 @@ public class Shoe{
     }
   }
   public Card draw(){
-    return shoe(Math.random(deckNum).draw());
+    Card card = shoe.get((int)Math.random()*deckNum).draw();
     for(Deck deck : shoe){
-      if(deck.getRemaining() = 0){
+      if(deck.getRemaining() == 0){
         shoe.removeElement(deck);
       }
     }
+		return card;
   }
   public int getRemainingDecks(){
     return shoe.size();
