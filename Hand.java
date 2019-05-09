@@ -32,4 +32,11 @@ public class Hand{
     }
     return cards.toArray(new Card[1]); //need to give a dimension for the array, because java is weird
   }
+  public String toString(){
+    String cards = "";
+    for (Card card : hand){
+      cards = cards + card.getName() + " of " + card.getSuit() + "\n";
+    }
+    return cards;
+  }
 }
