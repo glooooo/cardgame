@@ -32,6 +32,13 @@ public class Hand{
     }
     return cards.toArray(new Card[1]); //need to give a dimension for the array, because java is weird
   }
+	public void removeAll(int value){
+		for (Card card : hand){
+      if (card.getValue() == value){
+        cards.remove(card);
+      }
+    }
+	}
   public String toString(){
     String cards = "";
     for (Card card : hand){
