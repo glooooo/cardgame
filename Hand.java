@@ -30,7 +30,7 @@ public class Hand{
         cards.add(card);
       }
     }
-    return cards.toArray(new Card[1]); //need to give a dimension for the array, because java is weird
+    return cards.toArray(new Card[0]); //need to give a dimension for the array, because java is weird
   }
 	public void removeAll(int value){
 		for (Card card : hand){
