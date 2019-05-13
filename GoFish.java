@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.lang.Integer;
+import java.util.Vector;
+import java.lang.Math;
+
 public class GoFish{
 	int playerscore = 0, compscore = 0;
 	Scanner input = new Scanner(System.in);
@@ -86,5 +89,27 @@ public class GoFish{
 			}
 		}while(goAgain);
 
+	}
+
+	public void compTurn(){
+		int request, max = 0; //request is the card that the computer is requesting, max is the largest number of the same card that the computer has
+		int[] cardNums = new int[13]; //this is the number of each value that is in the computer's hand
+		Vector<Integer> maxValues = new Vector<Integer>(0,0); //this is the list of values that have the max number of cards
+		for(int i = 1; i <= 13; i++){
+			if(compHand.findNum(i) > max){
+				max = compHand.findNum(i);
+			//	maxNum = 0;
+			}
+			//if(compHand.findNum(i) == max)
+			//	maxNum++;
+			cardNums[i-1] = compHand.findNum(i);
+		}
+		//maxValues = new int[maxNum];
+		for(int i = 0; i < 13; i++){
+			if(cardNums[i] == max){
+				maxValues.add(i+1);
+			}
+		}
+		request = maxValues.get((int)Math.random() * maxValues.size());
 	}
 }
