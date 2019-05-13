@@ -35,7 +35,7 @@ public class Hand{
 	public void removeAll(int value){
 		for (Card card : hand){
       if (card.getValue() == value){
-        cards.remove(card);
+        hand.remove(card);
       }
     }
 	}

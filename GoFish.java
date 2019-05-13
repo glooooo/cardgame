@@ -1,22 +1,23 @@
 import java.util.Scanner;
 import java.lang.Integer;
 public class GoFish{
+	int playerscore = 0, compscore = 0;
+	Scanner input = new Scanner(System.in);
+	Hand humanHand = new Hand();
+	Hand compHand = new Hand();
+	Deck deck = new Deck();
   public static void main(String[] args) {
-		int playerscore = 0, compscore = 0;
-		Scanner input = new Scanner(System.in);
-    Hand humanHand = new Hand();
-    Hand compHand = new Hand();
-    Deck deck = new Deck();
-    deck.shuffle();
+		GoFish goFish = new GoFish();
+    goFish.deck.shuffle();
     for(int i = 0; i < 7; i++){ //deal both players 7 cards
-      compHand.addCard(deck.draw());
-      humanHand.addCard(deck.draw());
+      goFish.compHand.addCard(goFish.deck.draw());
+      goFish.humanHand.addCard(goFish.deck.draw());
     }
     System.out.println("Welcome to Go Fish!");
     System.out.println("Human cards:");
-    System.out.println(humanHand);
+    System.out.println(goFish.humanHand);
     System.out.println("Computer cards:");
-    System.out.println(compHand);
+    System.out.println(goFish.compHand);
   }
 
 	public void humanTurn(){
@@ -39,7 +40,7 @@ public class GoFish{
 					}
 				}
 				System.out.println("Please enter a valid input.");
-			}
+			}while(!acceptable);
 
 			switch(entered){
 				case "A":
@@ -56,7 +57,7 @@ public class GoFish{
 					break;
 			}
 			request = Integer.parseInt(entered);
-			if(compHand.getAll(request).length() > 0){
+			if(compHand.getAll(request).length > 0){
 				for (Card card : compHand.getAll(request)){
 					humanHand.addCard(card);
 					System.out.println("You got the " + card.getName() + " of " + card.getSuit());
@@ -67,15 +68,21 @@ public class GoFish{
 				System.out.println("The computer does not have that card. Go Fish!");
 				drawnCard = deck.draw();
 				System.out.println("You got the " + drawnCard.getName() + " of " + drawnCard.getSuit());
+				if(drawnCard.getValue() == request){
+					goAgain = true;
+				}
 			}
 			for(int i = 1; i <= 13; i++){
-				if (findNum(i) == 4){
+				if (humanHand.findNum(i) == 4){
 					System.out.println("Getting rid of:");
 					for(Card card : humanHand.getAll(i)){
 						System.out.println(card.getName() + " of " + card.getSuit());
 					}
 					playerscore++;
 				}
+			}
+			if(goAgain == true){
+				System.out.println("You got what you asked for, you get to go again.");
 			}
 		}while(goAgain);
 
