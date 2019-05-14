@@ -12,15 +12,7 @@ public class GoFish{
   public static void main(String[] args) {
 		GoFish goFish = new GoFish();
     goFish.deck.shuffle();
-    for(int i = 0; i < 7; i++){ //deal both players 7 cards
-      goFish.compHand.addCard(goFish.deck.draw());
-      goFish.humanHand.addCard(goFish.deck.draw());
-    }
     System.out.println("Welcome to Go Fish!");
-    System.out.println("Human cards:");
-    System.out.println(goFish.humanHand);
-    System.out.println("Computer cards:");
-    System.out.println(goFish.compHand);
 		System.out.println("Drawing to see who goes first...");
 		Card compCard;
 		Card humanCard;
@@ -46,6 +38,13 @@ public class GoFish{
 
 		goFish.deck = new Deck();
 		goFish.deck.shuffle();
+
+		for(int i = 0; i < 7; i++){ //deal both players 7 cards
+      goFish.compHand.addCard(goFish.deck.draw());
+      goFish.humanHand.addCard(goFish.deck.draw());
+    }
+		System.out.println("Your hand:");
+		System.out.println(goFish.humanHand);
 
 		while((goFish.humanHand.getNumOfCards() > 0 || goFish.compHand.getNumOfCards() > 0) || goFish.deck.getRemaining() > 0){
 			System.out.println("It's your turn.");
