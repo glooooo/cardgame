@@ -44,8 +44,9 @@ public class Hand{
 	}
   public String toString(){
     String cards = "";
-    for (Card card : hand){
-      cards = cards + card.getName() + " of " + card.getSuit() + "\n";
+    for (int i = 1; i <= 13; i++){
+      for(Card card : getAll(i))
+				cards = cards + card.getName() + " of " + card.getSuit() + "\n";
     }
     return cards;
   }

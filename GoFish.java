@@ -24,10 +24,24 @@ public class GoFish{
 			System.out.println("The computer got the " + compCard.getName() + " of " + compCard.getSuit());
 			if(humanCard.getValue() > compCard.getValue()){
 				System.out.println("You go first.");
+				goFish.deck = new Deck();
+				goFish.deck.shuffle();
+
+				for(int i = 0; i < 7; i++){ //deal both players 7 cards
+		      goFish.compHand.addCard(goFish.deck.draw());
+		      goFish.humanHand.addCard(goFish.deck.draw());
+		    }
 			}
 			else{
 				if(humanCard.getValue() < compCard.getValue()){
 					System.out.println("The computer goes first");
+					goFish.deck = new Deck();
+					goFish.deck.shuffle();
+
+					for(int i = 0; i < 7; i++){ //deal both players 7 cards
+			      goFish.compHand.addCard(goFish.deck.draw());
+			      goFish.humanHand.addCard(goFish.deck.draw());
+			    }
 					goFish.compTurn();
 				}
 				else{
@@ -36,13 +50,7 @@ public class GoFish{
 			}
 		}while(humanCard.getValue() == compCard.getValue());
 
-		goFish.deck = new Deck();
-		goFish.deck.shuffle();
 
-		for(int i = 0; i < 7; i++){ //deal both players 7 cards
-      goFish.compHand.addCard(goFish.deck.draw());
-      goFish.humanHand.addCard(goFish.deck.draw());
-    }
 		System.out.println("Your hand:");
 		System.out.println(goFish.humanHand);
 
