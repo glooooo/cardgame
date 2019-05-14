@@ -44,6 +44,9 @@ public class GoFish{
 			}
 		}while(humanCard.getValue() == compCard.getValue());
 
+		goFish.deck = new Deck();
+		goFish.deck.shuffle();
+
 		while((goFish.humanHand.getNumOfCards() > 0 || goFish.compHand.getNumOfCards() > 0) || goFish.deck.getRemaining() > 0){
 			System.out.println("It's your turn.");
 			goFish.humanTurn();
@@ -75,7 +78,7 @@ public class GoFish{
 		boolean goAgain = false;
 		Card drawnCard;
 		do{
-			System.out.println("Your hand is " + humanHand);
+			System.out.println("Your hand is\n" + humanHand);
 			System.out.println("What card would you like to ask for? (Enter a number, or A, J, Q, or K)");
 			acceptable = false;
 			goAgain = false;
@@ -106,7 +109,7 @@ public class GoFish{
 					break;
 			}
 			request = Integer.parseInt(entered);
-			if(compHand.getAll(request).length > 0){
+			if(compHand.findNum(request) > 0){
 				for (Card card : compHand.getAll(request)){
 					humanHand.addCard(card);
 					System.out.println("You got the " + card.getName() + " of " + card.getSuit());
@@ -120,7 +123,7 @@ public class GoFish{
 					drawnCard = deck.draw();
 					humanHand.addCard(drawnCard);
 					System.out.println("You got the " + drawnCard.getName() + " of " + drawnCard.getSuit());
-					if(drawnCard.getValue() == request){System.out.println("You got the " + drawnCard.getName() + " of " + drawnCard.getSuit());
+					if(drawnCard.getValue() == request){
 						goAgain = true;
 					}
 				}
@@ -128,6 +131,7 @@ public class GoFish{
 					System.out.println("You tried to draw, but there are no more cards in the deck.");
 				}
 			}
+
 			for(int i = 1; i <= 13; i++){
 				if (humanHand.findNum(i) == 4){
 					System.out.println("Getting rid of:");
@@ -138,6 +142,7 @@ public class GoFish{
 					playerscore++;
 				}
 			}
+
 			if(goAgain == true){
 				System.out.println("You got what you asked for, you get to go again.");
 			}
@@ -148,12 +153,14 @@ public class GoFish{
 	public void compTurn(){
 		int request, max = 0; //request is the card that the computer is requesting, max is the largest number of the same card that the computer has
 		int[] cardNums = new int[13]; //this is the number of each value that is in the computer's hand
-		Vector<Integer> maxValues = new Vector<Integer>(0,0); //this is the list of values that have the max number of cards
+		Vector<Integer> maxValues; //this is the list of values that have the max number of cards
 		boolean goAgain = false;
 		Card drawnCard;
 		Card requestCard; //used to use the card class' getName method
 		do{
 			goAgain = false;
+			max = 0;
+			maxValues = new Vector<Integer>(0,0);
 			for(int i = 1; i <= 13; i++){
 				if(compHand.findNum(i) > max)
 					max = compHand.findNum(i);
@@ -168,7 +175,7 @@ public class GoFish{
 			requestCard = new Card(request, 'S');
 			System.out.println("The computer is asking for " + requestCard.getName() + "s");
 
-			if(humanHand.getAll(request).length > 0){
+			if(humanHand.findNum(request) > 0){
 				for (Card card : humanHand.getAll(request)){
 					compHand.addCard(card);
 					System.out.println("You gave the computer the " + card.getName() + " of " + card.getSuit());

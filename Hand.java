@@ -1,4 +1,5 @@
 import java.util.Vector;
+import java.util.Iterator;
 
 public class Hand{
   Vector<Card> hand = new Vector<Card>(0,0);
@@ -33,14 +34,13 @@ public class Hand{
     return cards.toArray(new Card[0]); //need to give a dimension for the array, because java is weird
   }
 	public void removeAll(int value){
-    int size = hand.size() - findNum(value);
-    Card card;
-		for (int i = 0; i < size; i++){
-      card = hand.get(i);
-      if (card.getValue() == value){
-        hand.remove(card);
-      }
-    }
+		Card card;
+		Iterator<Card> itr = hand.iterator();
+    while(itr.hasNext()){
+			card = itr.next();
+			if(card.getValue() == value)
+				itr.remove();
+		}
 	}
   public String toString(){
     String cards = "";
