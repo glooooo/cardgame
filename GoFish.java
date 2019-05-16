@@ -4,30 +4,30 @@ import java.util.Vector;
 import java.lang.Math;
 
 public class GoFish{
-	int playerscore = 0, compscore = 0;
-	Scanner input = new Scanner(System.in);
-	Hand humanHand = new Hand();
+	int playerscore = 0, compscore = 0; //initalize the score variables for the player and computer
+	Scanner input = new Scanner(System.in); //create scanner
+	Hand humanHand = new Hand(); //create hand objects
 	Hand compHand = new Hand();
-	Deck deck = new Deck();
-  public static void main(String[] args) {
-		GoFish goFish = new GoFish();
-    goFish.deck.shuffle();
+	Deck deck = new Deck(); //create deck object
+  public static void main(String[] args) { //main method
+		GoFish goFish = new GoFish(); //create object
+    goFish.deck.shuffle(); //shuffle the deck
     System.out.println("Welcome to Go Fish!");
 		System.out.println("Drawing to see who goes first...");
-		Card compCard;
+		Card compCard; //initalize card objects
 		Card humanCard;
 
-		do{
-			humanCard = goFish.deck.draw();
+		do{ //while it's not a tie
+			humanCard = goFish.deck.draw(); //draw cards
 			compCard = goFish.deck.draw();
 			System.out.println("You got the " + humanCard.getName() + " of " + humanCard.getSuit());
 			System.out.println("The computer got the " + compCard.getName() + " of " + compCard.getSuit());
 			if(humanCard.getValue() > compCard.getValue()){
 				System.out.println("You go first.");
-				goFish.deck = new Deck();
-				goFish.deck.shuffle();
+				goFish.deck = new Deck(); //create a new deck object, as there is no way to replace cards in the deck, this is a functionality that could easily be added if neccesary
+				goFish.deck.shuffle(); //shuffle new deck
 
-				for(int i = 0; i < 7; i++){ //deal both players 7 cards
+				for(int i = 0; i < 7; i++){ //deal both players 7 cards from the new deck
 		      goFish.compHand.addCard(goFish.deck.draw());
 		      goFish.humanHand.addCard(goFish.deck.draw());
 		    }
@@ -51,10 +51,10 @@ public class GoFish{
 		}while(humanCard.getValue() == compCard.getValue());
 
 
-		System.out.println("Your hand:");
+		System.out.println("Your hand:"); //print the user's hand
 		System.out.println(goFish.humanHand);
 
-		while((goFish.humanHand.getNumOfCards() > 0 || goFish.compHand.getNumOfCards() > 0) || goFish.deck.getRemaining() > 0){
+		while((goFish.humanHand.getNumOfCards() > 0 || goFish.compHand.getNumOfCards() > 0) || goFish.deck.getRemaining() > 0){ //while there are cards left in play
 			System.out.println("It's your turn.");
 			goFish.humanTurn();
 			System.out.println("It's the computer's turn.");
@@ -78,11 +78,11 @@ public class GoFish{
   }
 
 	public void humanTurn(){
-		String[] acceptableInputs = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+		String[] acceptableInputs = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"}; // the name is self explanitory
 		String entered = "";
-		int request;
-		boolean acceptable = false;
-		boolean goAgain = false;
+		int request; //the requested value of card
+		boolean acceptable = false; //did the user enter an acceptable input?
+		boolean goAgain = false; //did the user get what they wanted, and therefore go again
 		Card drawnCard;
 		do{
 			System.out.println("Your hand is\n" + humanHand);
@@ -101,7 +101,7 @@ public class GoFish{
 				System.out.println("Please enter a valid input.");
 			}
 
-			switch(entered){
+			switch(entered){ //if they entered a letter
 				case "A":
 					entered = "1";
 					break;
@@ -116,21 +116,21 @@ public class GoFish{
 					break;
 			}
 			request = Integer.parseInt(entered);
-			if(compHand.findNum(request) > 0){
-				for (Card card : compHand.getAll(request)){
+			if(compHand.findNum(request) > 0){ //if the computer has any of the requested card
+				for (Card card : compHand.getAll(request)){ //add all of the card to the human's hand
 					humanHand.addCard(card);
 					System.out.println("You got the " + card.getName() + " of " + card.getSuit());
 				}
-				compHand.removeAll(request);
-				goAgain = true;
+				compHand.removeAll(request); //remove the cards from the computer's hand
+				goAgain = true; //the user got what they wanted, and gets to go again
 			}
 			else{
 				System.out.println("The computer does not have that card. Go Fish!");
-				if(deck.getRemaining() > 0){
-					drawnCard = deck.draw();
+				if(deck.getRemaining() > 0){ //if there are any cards left in the deck
+					drawnCard = deck.draw(); //go fish
 					humanHand.addCard(drawnCard);
 					System.out.println("You got the " + drawnCard.getName() + " of " + drawnCard.getSuit());
-					if(drawnCard.getValue() == request){
+					if(drawnCard.getValue() == request){ //if the user got what they wanted
 						goAgain = true;
 					}
 				}
@@ -139,7 +139,7 @@ public class GoFish{
 				}
 			}
 
-			for(int i = 1; i <= 13; i++){
+			for(int i = 1; i <= 13; i++){ //get rid of any sets of 4
 				if (humanHand.findNum(i) == 4){
 					System.out.println("Getting rid of:");
 					for(Card card : humanHand.getAll(i)){
@@ -168,21 +168,21 @@ public class GoFish{
 			goAgain = false;
 			max = 0;
 			maxValues = new Vector<Integer>(0,0);
-			for(int i = 1; i <= 13; i++){
+			for(int i = 1; i <= 13; i++){ //find what the largest number of cards with the same value is, and fill the cardNums array
 				if(compHand.findNum(i) > max)
 					max = compHand.findNum(i);
 				cardNums[i-1] = compHand.findNum(i);
 			}
-			for(int i = 0; i < 13; i++){
+			for(int i = 0; i < 13; i++){ //put the values with the max number of cards into the maxValues vector
 				if(cardNums[i] == max){
 					maxValues.add(i+1);
 				}
 			}
-			request = maxValues.get((int)Math.random() * maxValues.size());
-			requestCard = new Card(request, 'S');
+			request = maxValues.get((int)Math.random() * maxValues.size()); //choose a random one of the options to ask for
+			requestCard = new Card(request, 'S'); //create new card object
 			System.out.println("The computer is asking for " + requestCard.getName() + "s");
 
-			if(humanHand.findNum(request) > 0){
+			if(humanHand.findNum(request) > 0){ //basicly do all of the same things as in humanTurn, but with the computer's hand and requested card
 				for (Card card : humanHand.getAll(request)){
 					compHand.addCard(card);
 					System.out.println("You gave the computer the " + card.getName() + " of " + card.getSuit());
